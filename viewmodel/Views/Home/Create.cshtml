@@ -1,0 +1,77 @@
+﻿@model viewmodel.ViewModel.OrderDetailsViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+@using (Html.BeginForm("Create", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { })
+
+    <table id="ta">
+        <tr>
+            <th>OrderID</th>
+            <td>
+                @Html.TextBoxFor(model => model.Orders.OrderID)
+                @Html.ValidationMessageFor(model => model.Orders.OrderID, "", new { })
+            </td>
+        </tr>
+        <tr>
+            <th>EmployeeID</th>
+            <td>
+                @Html.TextBoxFor(model => model.Orders.EmployeeID)
+                @Html.ValidationMessageFor(model => model.Orders.EmployeeID, "", new { })
+            </td>
+        </tr>
+        @for (int i = 0; i < 1; i++)
+            {
+                <tr>
+                    <th>@Html.LabelFor(model => model.OrderDetails[i].OrderID)</th>
+                    <td>
+                        @Html.TextBoxFor(model => model.OrderDetails[i].OrderID, new { id = "TextBoxFor1" })
+                        @Html.ValidationMessageFor(model => model.OrderDetails[i].OrderID, "", new { })
+                    </td>
+                </tr>
+                <tr>
+                    <th>@Html.LabelFor(model => model.OrderDetails[i].ProductID)</th>
+                    <td>
+                        @Html.TextBoxFor(model => model.OrderDetails[i].ProductID, new { id = "TextBoxFor2" })
+                        @Html.ValidationMessageFor(model => model.OrderDetails[i].ProductID, "", new { })
+                    </td>
+                </tr>
+                <tr>
+                    <th>@Html.LabelFor(model => model.OrderDetails[i].Quantity)</th>
+                    <td>
+                        @Html.TextBoxFor(model => model.OrderDetails[i].Quantity, new { id = "TextBoxFor3" })
+                        @Html.ValidationMessageFor(model => model.OrderDetails[i].Quantity, "", new { })
+                    </td>
+                </tr>
+            }
+        <tr>
+            <td><input type="submit"></td>
+            <td><input type="button" id="add" value="新增" onclick="addd()"></td>
+            <td><button>刪除</button></td>
+        </tr>
+    </table>
+
+}
+
+<script type="text/javascript">
+
+    function addd() {
+            var textboxfor1 = $("#TextBoxFor1").val();
+            var textboxfor2 = $("#TextBoxFor2").val();
+            var textboxfor3 = $("#TextBoxFor3").val();
+
+            var markup =  '@for (int i =1; i < 2; i++) {<tr><th>@Html.LabelFor(model => model.OrderDetails[i].OrderID)</th><td>@Html.TextBoxFor(model => model.OrderDetails[i].OrderID, new { id = "TextBoxFor1" })@Html.ValidationMessageFor(model => model.OrderDetails[i].OrderID, "", new { })</td></tr><tr><th>@Html.LabelFor(model => model.OrderDetails[i].ProductID)</th><td>@Html.TextBoxFor(model => model.OrderDetails[i].ProductID, new { id = "TextBoxFor2" })@Html.ValidationMessageFor(model => model.OrderDetails[i].ProductID, "", new { })</td></tr><tr><th>@Html.LabelFor(model => model.OrderDetails[i].Quantity)</th><td>@Html.TextBoxFor(model => model.OrderDetails[i].Quantity, new { id = "TextBoxFor3" })@Html.ValidationMessageFor(model => model.OrderDetails[i].Quantity, "", new { })</td></tr>}';
+            $("#ta").append(markup);
+
+    };
+    
+        $(document).ready(function(){
+            $("button").click(function(){
+                $("#tas").empty();
+            });
+        });
+</script>
